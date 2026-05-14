@@ -3,6 +3,7 @@ import { PremiumForm } from './components/PremiumForm';
 import { PremiumResult } from './components/PremiumResult';
 import { MortalityCurveChart } from './components/MortalityCurveChart';
 import { SensitivityChart } from './components/SensitivityChart';
+import { SimulationPanel } from './components/SimulationPanel';
 import { calculatePremium, getSensitivity } from './api/premiumApi';
 import type {
   PremiumRequest,
@@ -13,6 +14,7 @@ import type {
 function App() {
   const [result, setResult] = useState<PremiumResponse | null>(null);
   const [sensitivityData, setSensitivityData] = useState<SensitivityDataPoint[]>([]);
+  const [lastInputs, setLastInputs] = useState<PremiumRequest | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,6 +36,7 @@ function App() {
       ]);
       setResult(premiumRes.data);
       setSensitivityData(sensitivityRes.data.dataPoints);
+      setLastInputs(data);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Calculation failed');
     } finally {
@@ -49,6 +52,7 @@ function App() {
       <PremiumResult result={result} />
       <SensitivityChart data={sensitivityData} />
       <MortalityCurveChart />
+      <SimulationPanel inputs={lastInputs} />
     </div>
   );
 }

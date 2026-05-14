@@ -21,19 +21,21 @@ export class PremiumController {
   @Post('sensitivity')
   sensitivity(@Body() dto: SensitivityDto) {
     const dataPoints: Array<{ interestRate: number; netAnnualPremium: number }> = [];
-    for (
-      let rate = dto.interestRateMin;
-      rate <= dto.interestRateMax;
-      rate += dto.interestRateStep
-    ) {
-      const roundedRate = Math.round(rate * 10000) / 10000;
+    const steps = Math.round(
+      (dto.interestRateMax - dto.interestRateMin) / dto.interestRateStep,
+    );
+    for (let i = 0; i <= steps; i++) {
+      const rate =
+        Math.round(
+          (dto.interestRateMin + i * dto.interestRateStep) * 10000,
+        ) / 10000;
       const { netAnnualPremium } = this.premiumService.calculateNetPremium(
         dto.age,
         dto.term,
         dto.sumAssured,
-        roundedRate,
+        rate,
       );
-      dataPoints.push({ interestRate: roundedRate, netAnnualPremium });
+      dataPoints.push({ interestRate: rate, netAnnualPremium });
     }
     return { dataPoints };
   }

@@ -45,7 +45,7 @@ export function PremiumForm({ onSubmit, loading }: Props) {
         </label>
 
         <label>
-          Sum Assured (£/$)
+          Sum Assured (€)
           <input type="number" value={sumAssured} min={1000}
             onChange={(e) => setSumAssured(Number(e.target.value))} />
         </label>

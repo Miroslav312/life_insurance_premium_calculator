@@ -42,8 +42,8 @@ These are the domain concepts the codebase implements. You do **not** need an ac
 | **lx** | Number of survivors at age x out of the original cohort. | `mortalityTable[age].lx` |
 | **dx** | Number of deaths between age x and x+1. `dx = lx - lx+1` | Derived column. |
 | **Discount factor (v)** | `v = 1 / (1 + i)` where `i` is the annual interest rate. Converts future money to present value. | A simple formula. |
-| **Ax (Net Single Premium)** | Present value of a £1/\$1 death benefit. For a term policy of n years on a life aged x: $$A^1_{x:\overline{n}\|} = \sum_{t=0}^{n-1} v^{t+1} \cdot {}_tp_x \cdot q_{x+t}$$ where ${}_tp_x = l_{x+t} / l_x$ is the probability of surviving t years. | A loop summing discounted death probabilities. |
-| **Ad (Annuity-due)** | Present value of £1/\$1 paid at the start of each year the life survives, for n years: $$\ddot{a}_{x:\overline{n}\|} = \sum_{t=0}^{n-1} v^{t} \cdot {}_tp_x$$ | A loop summing discounted survival probabilities. |
+| **Ax (Net Single Premium)** | Present value of a €1 death benefit. For a term policy of n years on a life aged x: $$A^1_{x:\overline{n}\|} = \sum_{t=0}^{n-1} v^{t+1} \cdot {}_tp_x \cdot q_{x+t}$$ where ${}_tp_x = l_{x+t} / l_x$ is the probability of surviving t years. | A loop summing discounted death probabilities. |
+| **Ad (Annuity-due)** | Present value of €1 paid at the start of each year the life survives, for n years: $$\ddot{a}_{x:\overline{n}\|} = \sum_{t=0}^{n-1} v^{t} \cdot {}_tp_x$$ | A loop summing discounted survival probabilities. |
 | **Net Level Premium (P)** | The annual premium that makes the policy actuarially fair: $$P = \frac{A^1_{x:\overline{n}\|}}{\ddot{a}_{x:\overline{n}\|}} \times \text{Sum Assured}$$ | Division of two numbers, then multiply by sum assured. |
 | **Monte Carlo simulation** | Simulate N policyholders: for each, randomly determine year of death (using qx probabilities) and compute the insurer's payout. Aggregate results show the distribution of total claims. | A loop with random number generation. |
 

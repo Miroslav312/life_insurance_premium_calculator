@@ -22,8 +22,8 @@ export function SensitivityChart({ data }: Props) {
             tickFormatter={(v: number) => `${(v * 100).toFixed(1)}%`}
             label={{ value: 'Interest Rate', position: 'insideBottom', offset: -5 }}
           />
-          <YAxis label={{ value: 'Annual Premium (£)', angle: -90, position: 'insideLeft' }} />
-          <Tooltip formatter={(v) => `£${Number(v).toFixed(2)}`} />
+          <YAxis label={{ value: 'Annual Premium (€)', angle: -90, position: 'insideLeft' }} />
+          <Tooltip formatter={(v) => `€${Number(v).toFixed(2)}`} />
           <Line type="monotone" dataKey="netAnnualPremium" stroke="#2980b9" dot />
         </LineChart>
       </ResponsiveContainer>

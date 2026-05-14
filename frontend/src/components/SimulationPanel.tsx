@@ -9,7 +9,7 @@ interface Props {
 }
 
 const formatCurrency = (value: number) =>
-  `£${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  `€${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 export function SimulationPanel({ inputs }: Props) {
   const [numSimulations, setNumSimulations] = useState<number>(10000);
@@ -49,7 +49,7 @@ export function SimulationPanel({ inputs }: Props) {
 
   const chartData = result?.histogram.map((bucket) => ({
     ...bucket,
-    bucketLabel: `£${Math.round(bucket.bucketMin).toLocaleString()}`,
+    bucketLabel: `€${Math.round(bucket.bucketMin).toLocaleString()}`,
   }));
 
   return (

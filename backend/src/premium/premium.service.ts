@@ -6,7 +6,7 @@ export class PremiumService {
   constructor(private readonly mortality: MortalityService) {}
 
   /**
-   * Calculate Ax — present value of a £1 death benefit
+   * Calculate Ax — present value of a €1 death benefit
    * for a term life policy on a life aged x, for n years.
    *
    * Formula: Ax = Σ (t=0 to n-1) v^(t+1) * tPx * q(x+t)
@@ -31,7 +31,7 @@ export class PremiumService {
   }
 
   /**
-   * Calculate äx — present value of an annuity-due of £1/year
+   * Calculate äx — present value of an annuity-due of €1/year
    * for n years on a life aged x.
    *
    * Formula: äx = Σ (t=0 to n-1) v^t * tPx

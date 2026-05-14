@@ -12,8 +12,8 @@ export function PremiumResult({ result }: Props) {
     <div className="result-card">
       <h3>Result</h3>
       <p><strong>Net Annual Premium:</strong> £{result.netAnnualPremium.toLocaleString()}</p>
-      <p><strong>Ax (PV of benefit):</strong> {result.ax.toFixed(5)}</p>
-      <p><strong>äx (Annuity-due):</strong> {result.annuityDue.toFixed(5)}</p>
+      <p><strong>Present Value of Benefit (Ax):</strong> {result.ax.toFixed(5)}</p>
+      <p><strong>Annuity Factor (äx):</strong> {result.annuityDue.toFixed(5)}</p>
     </div>
   );
 }

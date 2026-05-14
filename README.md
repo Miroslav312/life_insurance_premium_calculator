@@ -80,13 +80,6 @@ cd backend && npm test
 cd quant && pytest
 ```
 
-## Future Extensions
-
-- Smoker / non-smoker separate mortality tables
-- Expense loadings and profit margins on top of the net premium
-- Side-by-side comparison of multiple quotes
-- Whole-of-life and endowment product types
-
 ## Docs
 
 - [Design & Architecture](docs/DESIGN_AND_ARCHITECTURE.md)

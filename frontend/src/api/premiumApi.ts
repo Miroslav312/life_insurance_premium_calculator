@@ -10,7 +10,6 @@ export interface PremiumRequest {
   term: number;
   sumAssured: number;
   interestRate: number;
-  smoker?: boolean;
 }
 
 export interface PremiumResponse {

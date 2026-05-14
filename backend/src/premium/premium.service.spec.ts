@@ -1,3 +1,4 @@
+import { UnprocessableEntityException } from '@nestjs/common';
 import { PremiumService } from './premium.service';
 import { MortalityService } from '../mortality/mortality.service';
 
@@ -26,5 +27,11 @@ describe('PremiumService', () => {
     const lowRate = premiumService.calculateNetPremium(30, 20, 100000, 0.02);
     const highRate = premiumService.calculateNetPremium(30, 20, 100000, 0.08);
     expect(highRate.netAnnualPremium).toBeLessThan(lowRate.netAnnualPremium);
+  });
+
+  it('should throw UnprocessableEntityException when age+term exceeds the mortality table', () => {
+    expect(() =>
+      premiumService.calculateNetPremium(95, 30, 100000, 0.05),
+    ).toThrow(UnprocessableEntityException);
   });
 });

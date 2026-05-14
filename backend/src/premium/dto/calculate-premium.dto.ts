@@ -1,4 +1,4 @@
-import { IsInt, IsNumber, IsBoolean, IsOptional, Min, Max } from 'class-validator';
+import { IsInt, IsNumber, Min, Max } from 'class-validator';
 
 export class CalculatePremiumDto {
   @IsInt()
@@ -19,8 +19,4 @@ export class CalculatePremiumDto {
   @Min(0.001)
   @Max(0.20)
   interestRate!: number;
-
-  @IsBoolean()
-  @IsOptional()
-  smoker?: boolean;
 }

@@ -1,4 +1,8 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  OnModuleInit,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import csvParser from 'csv-parser';
@@ -89,13 +93,21 @@ export class MortalityService implements OnModuleInit {
 
   getQx(age: number): number {
     const row = this.getRow(age);
-    if (!row) throw new Error(`No mortality data for age ${age}`);
+    if (!row) {
+      throw new UnprocessableEntityException(
+        `Age ${age} is outside the mortality table range (0–${this.getMaxAge()})`,
+      );
+    }
     return row.qx;
   }
 
   getLx(age: number): number {
     const row = this.getRow(age);
-    if (!row) throw new Error(`No mortality data for age ${age}`);
+    if (!row) {
+      throw new UnprocessableEntityException(
+        `Age ${age} is outside the mortality table range (0–${this.getMaxAge()})`,
+      );
+    }
     return row.lx;
   }
 

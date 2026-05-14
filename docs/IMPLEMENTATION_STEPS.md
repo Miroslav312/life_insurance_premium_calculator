@@ -42,20 +42,20 @@ __pycache__/
 ### 0.4 Create the `data/` folder with a mortality table
 
 1. Go to the US SSA life table page: <https://www.ssa.gov/oact/STATS/table4c6.html>
-2. Copy the **Male** (or combined) data into a CSV file.
-3. Save it as `data/life-table.csv` with this format:
+2. Copy the table data into a CSV file.
+3. Save it as `data/american-life-table.csv`. The repo uses the SSA wide schema with both sexes side-by-side:
 
 ```csv
-age,qx,lx,dx,ex
-0,0.005870,100000,587,76.33
-1,0.000390,99413,39,75.78
-2,0.000250,99374,25,74.81
+age, male_death_probability, male_number_of_lives, male_life_expectancy, female_death_probability, female_number_of_lives, female_life_expectancy
+0,   0.006064,               100000,               74.74,                0.005119,                 100000,                 80.18
+1,   0.000491,               99394,                74.20,                0.000398,                 99488,                  79.60
+2,   0.000309,               99345,                73.23,                0.000240,                 99449,                  78.63
 ...
 ```
 
-> **Tip**: You only need the `age`, `qx`, and `lx` columns. `dx` and `ex` are nice-to-have.
+> **Note**: The mortality loader accepts either schema via column aliasing — the SSA wide format above, or a simpler `age,qx,lx,dx,ex` layout. You only need `age` plus a `qx`/`lx` pair (male or female) at minimum.
 
-**Checkpoint**: You have a project root with `data/life-table.csv` and a `.gitignore`. Commit this.
+**Checkpoint**: You have a project root with `data/american-life-table.csv` and a `.gitignore`. Commit this.
 
 ---
 
@@ -137,7 +137,7 @@ export class MortalityService implements OnModuleInit {
 
   private loadTable(): Promise<void> {
     return new Promise((resolve, reject) => {
-      const csvPath = path.resolve(__dirname, '..', '..', '..', 'data', 'life-table.csv');
+      const csvPath = path.resolve(__dirname, '..', '..', '..', 'data', 'american-life-table.csv');
       const rows: MortalityRow[] = [];
 
       fs.createReadStream(csvPath)
@@ -855,7 +855,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
-DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "life-table.csv"
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "american-life-table.csv"
 
 
 def load_mortality_table() -> pd.DataFrame:

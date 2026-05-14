@@ -86,7 +86,7 @@ These are the domain concepts the codebase implements. You do **not** need an ac
 │                            │                                     │
 │  ┌─────────────────────────▼──────────────────────────────────┐  │
 │  │                   Data Layer                                │  │
-│  │  life-table.csv (loaded once at startup into memory)       │  │
+│  │  american-life-table.csv (loaded once at startup into memory)       │  │
 │  └────────────────────────────────────────────────────────────┘  │
 │                                                                  │
 └──────────────────────┬───────────────────────────────────────────┘
@@ -363,7 +363,7 @@ actuarial/
 │   └── test_simulation.py
 │
 ├── data/
-│   └── life-table.csv                ← public mortality data
+│   └── american-life-table.csv       ← public mortality data
 │
 └── README.md
 ```

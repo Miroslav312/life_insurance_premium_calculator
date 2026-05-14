@@ -87,4 +87,3 @@ cd quant && pytest
 ## Docs
 
 - [Design & Architecture](docs/DESIGN_AND_ARCHITECTURE.md)
-- [Implementation Steps](docs/IMPLEMENTATION_STEPS.md)

@@ -21,22 +21,58 @@ export class MortalityService implements OnModuleInit {
 
   private loadTable(): Promise<void> {
     return new Promise((resolve, reject) => {
-      const csvPath = path.resolve(__dirname, '..', '..', '..', 'data', 'life-table.csv');
+      const candidateFiles = [
+        'american-life-table.csv',
+      ];
+      const dataDir = path.resolve(__dirname, '..', '..', '..', 'data');
+      const csvPath = candidateFiles
+        .map((file) => path.join(dataDir, file))
+        .find((filePath) => fs.existsSync(filePath));
+
+      if (!csvPath) {
+        return reject(
+          new Error(
+            `Mortality data file not found. Expected one of: ${candidateFiles
+              .map((f) => `data/${f}`)
+              .join(', ')}`,
+          ),
+        );
+      }
+
       const rows: MortalityRow[] = [];
 
       fs.createReadStream(csvPath)
-        .pipe(csvParser())
+        .pipe(
+          csvParser({
+            mapHeaders: ({ header }) => header.trim().toLowerCase(),
+            mapValues: ({ value }) =>
+              typeof value === 'string' ? value.trim() : value,
+          }),
+        )
         .on('data', (row: Record<string, string>) => {
+          // Support both the actuarial schema (qx, lx, ex) and the
+          // SSA schema (male_death_probability, male_number_of_lives, ...).
+          const qxRaw = row.qx ?? row.male_death_probability;
+          const lxRaw = row.lx ?? row.male_number_of_lives;
+          const exRaw = row.ex ?? row.male_life_expectancy ?? '0';
           rows.push({
             age: parseInt(row.age, 10),
-            qx: parseFloat(row.qx),
-            lx: parseFloat(row.lx),
-            dx: parseFloat(row.dx || '0'),
-            ex: parseFloat(row.ex || '0'),
+            qx: parseFloat(qxRaw),
+            lx: parseFloat(lxRaw),
+            dx: parseFloat(row.dx ?? '0'),
+            ex: parseFloat(exRaw),
           });
         })
         .on('end', () => {
-          this.table = rows.sort((a, b) => a.age - b.age);
+          this.table = rows
+            .filter((r) => Number.isFinite(r.age))
+            .sort((a, b) => a.age - b.age);
+          // Backfill dx from lx differences when not provided in the CSV.
+          for (let i = 0; i < this.table.length - 1; i++) {
+            if (!Number.isFinite(this.table[i].dx) || this.table[i].dx === 0) {
+              this.table[i].dx = this.table[i].lx - this.table[i + 1].lx;
+            }
+          }
           resolve();
         })
         .on('error', reject);

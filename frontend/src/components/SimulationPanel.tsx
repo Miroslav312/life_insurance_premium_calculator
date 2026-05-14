@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { runSimulation } from '../api/premiumApi';
@@ -16,29 +16,36 @@ export function SimulationPanel({ inputs }: Props) {
   const [result, setResult] = useState<SimulationResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [reroll, setReroll] = useState(0);
+
+  useEffect(() => {
+    if (!inputs) return;
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await runSimulation({ ...inputs, numSimulations });
+        if (!cancelled) setResult(response.data);
+      } catch (err) {
+        if (cancelled) return;
+        if (axios.isAxiosError(err) && err.response?.status === 503) {
+          setError('Simulation service unavailable. Start the Python service: cd quant && uvicorn main:app --port 8000');
+        } else if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred.');
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [inputs, numSimulations, reroll]);
 
   if (!inputs) {
     return <p>Calculate a premium first to enable simulation.</p>;
   }
-
-  const handleRun = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await runSimulation({ ...inputs, numSimulations });
-      setResult(response.data);
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.status === 503) {
-        setError('Simulation service unavailable. Start the Python service: cd quant && uvicorn main:app --port 8000');
-      } else if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An unknown error occurred.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const chartData = result?.histogram.map((bucket) => ({
     ...bucket,
@@ -64,8 +71,8 @@ export function SimulationPanel({ inputs }: Props) {
             <option value={50000}>50,000</option>
           </select>
         </label>
-        <button onClick={handleRun} disabled={loading || inputs === null}>
-          {loading ? 'Running...' : 'Run Simulation'}
+        <button onClick={() => setReroll((r) => r + 1)} disabled={loading || inputs === null}>
+          {loading ? 'Running...' : 'Re-run'}
         </button>
       </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}

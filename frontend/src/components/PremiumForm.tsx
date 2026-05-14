@@ -7,11 +7,20 @@ interface Props {
   loading: boolean;
 }
 
+export const DEFAULT_PREMIUM_INPUTS: PremiumRequest = {
+  age: 30,
+  term: 20,
+  sumAssured: 100000,
+  interestRate: 0.05,
+};
+
 export function PremiumForm({ onSubmit, loading }: Props) {
-  const [age, setAge] = useState(30);
-  const [term, setTerm] = useState(20);
-  const [sumAssured, setSumAssured] = useState(100000);
-  const [interestRatePercent, setInterestRatePercent] = useState(5);
+  const [age, setAge] = useState(DEFAULT_PREMIUM_INPUTS.age);
+  const [term, setTerm] = useState(DEFAULT_PREMIUM_INPUTS.term);
+  const [sumAssured, setSumAssured] = useState(DEFAULT_PREMIUM_INPUTS.sumAssured);
+  const [interestRatePercent, setInterestRatePercent] = useState(
+    DEFAULT_PREMIUM_INPUTS.interestRate * 100,
+  );
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

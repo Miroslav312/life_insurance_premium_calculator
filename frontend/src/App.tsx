@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { PremiumForm } from './components/PremiumForm';
+import { useState, useEffect } from 'react';
+import { PremiumForm, DEFAULT_PREMIUM_INPUTS } from './components/PremiumForm';
 import { PremiumResult } from './components/PremiumResult';
 import { MortalityCurveChart } from './components/MortalityCurveChart';
 import { SensitivityChart } from './components/SensitivityChart';
@@ -17,6 +17,11 @@ function App() {
   const [lastInputs, setLastInputs] = useState<PremiumRequest | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    handleCalculate(DEFAULT_PREMIUM_INPUTS);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCalculate = async (data: PremiumRequest) => {
     setLoading(true);

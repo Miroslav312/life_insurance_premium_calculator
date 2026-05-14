@@ -11,6 +11,9 @@ export function SensitivityChart({ data }: Props) {
   return (
     <div>
       <h2>Sensitivity: Premium vs Interest Rate</h2>
+      <p style={{ color: '#666', fontSize: 14, marginTop: 0 }}>
+        Shows how the calculated annual premium changes as the assumed interest rate varies.
+      </p>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />

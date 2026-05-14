@@ -13,6 +13,9 @@ export function MortalityCurveChart() {
   return (
     <div>
       <h2>Mortality Curve (qx by Age)</h2>
+      <p style={{ color: '#666', fontSize: 14, marginTop: 0 }}>
+        qx is the probability that a person aged x dies before reaching age x+1.
+      </p>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />

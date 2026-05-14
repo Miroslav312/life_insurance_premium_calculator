@@ -4,6 +4,7 @@ import { MortalityController } from './mortality.controller';
 
 @Module({
   providers: [MortalityService],
-  controllers: [MortalityController]
+  controllers: [MortalityController],
+  exports: [MortalityService],        // ← important
 })
 export class MortalityModule {}

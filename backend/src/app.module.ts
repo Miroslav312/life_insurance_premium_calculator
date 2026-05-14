@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MortalityModule } from './mortality/mortality.module';
+import { PremiumModule } from './premium/premium.module';
 
 @Module({
-  imports: [MortalityModule],
+  imports: [MortalityModule, PremiumModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,5 +1,7 @@
 # Life Insurance Premium Calculator
 
+![CI](https://github.com/Miroslav312/life_insurance_premium_calculator/actions/workflows/ci.yml/badge.svg)
+
 A full-stack web app that calculates net level life insurance premiums using real actuarial mortality tables, visualises mortality and sensitivity curves, and runs Monte Carlo simulations of policy outcomes.
 
 ![Alt text](screenshots/Form_inputs.png)

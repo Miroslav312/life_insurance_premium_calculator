@@ -1,4 +1,5 @@
 import { IsInt, IsNumber, IsOptional, Max, Min } from 'class-validator';
+import { INTEREST_RATE_MAX, INTEREST_RATE_MIN } from '../../common/validation.constants';
 
 export class RunSimulationDto {
   @IsInt()
@@ -16,8 +17,8 @@ export class RunSimulationDto {
   sumAssured: number;
 
   @IsNumber()
-  @Min(0.001)
-  @Max(0.2)
+  @Min(INTEREST_RATE_MIN)
+  @Max(INTEREST_RATE_MAX)
   interestRate: number;
 
   @IsInt()

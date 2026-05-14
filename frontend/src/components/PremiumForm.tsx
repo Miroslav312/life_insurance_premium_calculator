@@ -11,11 +11,11 @@ export function PremiumForm({ onSubmit, loading }: Props) {
   const [age, setAge] = useState(30);
   const [term, setTerm] = useState(20);
   const [sumAssured, setSumAssured] = useState(100000);
-  const [interestRate, setInterestRate] = useState(0.05);
+  const [interestRatePercent, setInterestRatePercent] = useState(5);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    onSubmit({ age, term, sumAssured, interestRate });
+    onSubmit({ age, term, sumAssured, interestRate: interestRatePercent / 100 });
   };
 
   return (
@@ -41,9 +41,9 @@ export function PremiumForm({ onSubmit, loading }: Props) {
       </label>
 
       <label>
-        Interest Rate:
-        <input type="number" value={interestRate} min={0.001} max={0.20} step={0.005}
-          onChange={(e) => setInterestRate(Number(e.target.value))} />
+        Interest Rate (%):
+        <input type="number" value={interestRatePercent} min={0.1} max={50} step={0.1}
+          onChange={(e) => setInterestRatePercent(Number(e.target.value))} />
       </label>
 
       <button type="submit" disabled={loading}>

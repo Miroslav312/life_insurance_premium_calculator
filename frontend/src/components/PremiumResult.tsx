@@ -9,9 +9,9 @@ export function PremiumResult({ result }: Props) {
   if (!result) return null;
 
   return (
-    <div className="result-card">
+    <div className="card">
       <h3>Result</h3>
-      <p style={{ color: '#666', fontSize: 14, marginTop: 0 }}>
+      <p className="section-hint">
         Ax is the present value of a £1 death benefit; äx is the present value of a £1/year survival-contingent annuity. The premium equals (Ax / äx) × sum assured.
       </p>
       <p><strong>Net Annual Premium:</strong> £{result.netAnnualPremium.toLocaleString()}</p>

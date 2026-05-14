@@ -28,32 +28,34 @@ export function PremiumForm({ onSubmit, loading }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="card">
       <h2>Premium Calculator</h2>
 
-      <label>
-        Age:
-        <input type="number" value={age} min={0} max={100}
-          onChange={(e) => setAge(Number(e.target.value))} />
-      </label>
+      <div className="form-grid">
+        <label>
+          Age
+          <input type="number" value={age} min={0} max={100}
+            onChange={(e) => setAge(Number(e.target.value))} />
+        </label>
 
-      <label>
-        Policy Term (years):
-        <input type="number" value={term} min={1} max={50}
-          onChange={(e) => setTerm(Number(e.target.value))} />
-      </label>
+        <label>
+          Policy Term (years)
+          <input type="number" value={term} min={1} max={50}
+            onChange={(e) => setTerm(Number(e.target.value))} />
+        </label>
 
-      <label>
-        Sum Assured (£/$):
-        <input type="number" value={sumAssured} min={1000}
-          onChange={(e) => setSumAssured(Number(e.target.value))} />
-      </label>
+        <label>
+          Sum Assured (£/$)
+          <input type="number" value={sumAssured} min={1000}
+            onChange={(e) => setSumAssured(Number(e.target.value))} />
+        </label>
 
-      <label>
-        Interest Rate (%):
-        <input type="number" value={interestRatePercent} min={0.1} max={50} step={0.1}
-          onChange={(e) => setInterestRatePercent(Number(e.target.value))} />
-      </label>
+        <label>
+          Interest Rate (%)
+          <input type="number" value={interestRatePercent} min={0.1} max={50} step={0.1}
+            onChange={(e) => setInterestRatePercent(Number(e.target.value))} />
+        </label>
+      </div>
 
       <button type="submit" disabled={loading}>
         {loading ? 'Calculating...' : 'Calculate Premium'}

@@ -53,12 +53,12 @@ export function SimulationPanel({ inputs }: Props) {
   }));
 
   return (
-    <div>
+    <div className="card">
       <h2>Monte Carlo Simulation</h2>
-      <p style={{ color: '#666', fontSize: 14, marginTop: 0 }}>
+      <p className="section-hint">
         Simulates N policyholders year-by-year. Each year a random draw against qx determines whether the insurer pays out; surviving policies pay nothing.
       </p>
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 16 }}>
+      <div className="sim-controls">
         <label>
           Simulations:{' '}
           <select
@@ -75,10 +75,10 @@ export function SimulationPanel({ inputs }: Props) {
           {loading ? 'Running...' : 'Re-run'}
         </button>
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       {result && chartData && (
-        <div className="result-card">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, marginBottom: 16 }}>
+        <>
+          <div className="stats-row">
             <div>
               <strong>Mean payout:</strong> {formatCurrency(result.meanPayout)}
             </div>
@@ -104,7 +104,7 @@ export function SimulationPanel({ inputs }: Props) {
               <Bar dataKey="count" fill="#27ae60" />
             </BarChart>
           </ResponsiveContainer>
-        </div>
+        </>
       )}
     </div>
   );

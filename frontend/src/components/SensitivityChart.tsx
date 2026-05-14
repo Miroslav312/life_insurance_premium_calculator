@@ -9,9 +9,9 @@ export function SensitivityChart({ data }: Props) {
   if (data.length === 0) return null;
 
   return (
-    <div>
+    <div className="card">
       <h2>Sensitivity: Premium vs Interest Rate</h2>
-      <p style={{ color: '#666', fontSize: 14, marginTop: 0 }}>
+      <p className="section-hint">
         Shows how the calculated annual premium changes as the assumed interest rate varies.
       </p>
       <ResponsiveContainer width="100%" height={400}>

@@ -5,6 +5,7 @@ import { MortalityCurveChart } from './components/MortalityCurveChart';
 import { SensitivityChart } from './components/SensitivityChart';
 import { SimulationPanel } from './components/SimulationPanel';
 import { calculatePremium, getSensitivity } from './api/premiumApi';
+import './App.css';
 import type {
   PremiumRequest,
   PremiumResponse,
@@ -50,10 +51,10 @@ function App() {
   };
 
   return (
-    <div style={{ maxWidth: 900, margin: '0 auto', padding: 20 }}>
+    <div className="container">
       <h1>Life Insurance Premium Calculator</h1>
       <PremiumForm onSubmit={handleCalculate} loading={loading} />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       <PremiumResult result={result} />
       <SensitivityChart data={sensitivityData} />
       <MortalityCurveChart />

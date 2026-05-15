@@ -12,14 +12,14 @@ export function PremiumResult({ result }: Props) {
     <div className="card">
       <h3>Result</h3>
       <p className="section-hint">
-        Ax is the present value of a €1 death benefit; Af is the present value of a €1/year survival-contingent annuity.
+        Ax is the present value of a €1 death benefit; äx is the present value of a €1/year survival-contingent annuity.
       </p>
       <p className="section-hint">
-         The premium equals (Ax / Af) x sum assured.
+         The premium equals (Ax / äx) x sum assured.
       </p>
       <p><strong>Net Annual Premium:</strong> €{result.netAnnualPremium.toLocaleString()}</p>
       <p><strong>Present Value of Benefit (Ax):</strong> {result.ax.toFixed(5)}</p>
-      <p><strong>Annuity Factor (Af):</strong> {result.annuityDue.toFixed(5)}</p>
+      <p><strong>Annuity Factor (äx):</strong> {result.annuityDue.toFixed(5)}</p>
     </div>
   );
 }

@@ -67,8 +67,8 @@ Open <http://localhost:5173>. The premium and sensitivity charts work without th
 | **qx** | Probability that a person aged x dies before reaching age x+1. |
 | **lx** | Number of survivors at age x out of an initial cohort (100,000). |
 | **Ax** | Net single premium — present value of a €1 death benefit over an n-year term. |
-| **Af** | Annuity-due — present value of a €1/year survival-contingent annuity. |
-| **Net level premium** | P = (Ax / Af) × Sum Assured. Annual premium that makes the policy actuarially fair. |
+| **äx** | Annuity-due — present value of a €1/year survival-contingent annuity. |
+| **Net level premium** | P = (Ax / äx) × Sum Assured. Annual premium that makes the policy actuarially fair. |
 
 Mortality data is the US SSA period life table (both sexes, kept side-by-side in `data/american-life-table.csv`); the backend loader accepts either that wide schema or the standard `age,qx,lx,dx,ex` form.
 

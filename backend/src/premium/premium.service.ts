@@ -31,10 +31,10 @@ export class PremiumService {
   }
 
   /**
-   * Calculate Af — present value of an annuity-due of €1/year
+   * Calculate äx — present value of an annuity-due of €1/year
    * for n years on a life aged x.
    *
-   * Formula: Af = Σ (t=0 to n-1) v^t * tPx
+   * Formula: äx = Σ (t=0 to n-1) v^t * tPx
    */
   calculateAnnuityDue(age: number, term: number, interestRate: number): number {
     const v = 1 / (1 + interestRate);
@@ -52,7 +52,7 @@ export class PremiumService {
   /**
    * Calculate the net level annual premium.
    *
-   * Premium = (Ax / Af) × Sum Assured
+   * Premium = (Ax / äx) × Sum Assured
    */
   calculateNetPremium(
     age: number,

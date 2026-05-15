@@ -4,7 +4,7 @@
 
 A full-stack web app that calculates net level life insurance premiums using real actuarial mortality tables, visualises mortality and sensitivity curves, and runs Monte Carlo simulations of policy outcomes.
 
-![Alt text](screenshots/Form_inputs.png)
+![Alt text](screenshots/Form_input.png)
 ![Alt text](screenshots/Mortality_Curve.png)
 ![Alt text](screenshots/Premium_vs_Interest.png)
 ![Alt text](screenshots/Monte_Carlo.png)

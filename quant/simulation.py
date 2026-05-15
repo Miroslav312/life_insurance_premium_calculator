@@ -20,24 +20,22 @@ def simulate_policy_outcomes(
     n_simulations: int = 10000,
 ) -> dict:
     df = load_american_life_table()
-    # Clean up probability column: strip whitespace and convert to float
     df["male_death_probability"] = (
         df["male_death_probability"].astype(str).str.strip().astype(float)
     )
     df["age"] = df["age"].astype(str).str.strip().astype(int)
     qx_lookup = dict(zip(df["age"], df["male_death_probability"]))
 
-    payouts = np.zeros(n_simulations)
+    qx = np.array([qx_lookup.get(age + t, 1.0) for t in range(term)])
 
-    for i in range(n_simulations):
-        for t in range(term):
-            current_age = age + t
-            qx = qx_lookup.get(current_age, 1.0)
-            if np.random.random() < qx:
-                # Policyholder dies: compute present value of payout
-                discount = (1 / (1 + interest_rate)) ** (t + 1)
-                payouts[i] = sum_assured * discount
-                break
+    draws = np.random.random((n_simulations, term))
+    deaths = draws < qx
+
+    any_death = deaths.any(axis=1)
+    first_death_year = np.argmax(deaths, axis=1)
+
+    discount = (1 / (1 + interest_rate)) ** (first_death_year + 1)
+    payouts = np.where(any_death, sum_assured * discount, 0.0)
 
     return {
         "meanPayout": round(float(np.mean(payouts)), 2),
@@ -47,6 +45,32 @@ def simulate_policy_outcomes(
         "proportionClaimed": round(float(np.count_nonzero(payouts) / n_simulations), 4),
         "histogram": _build_histogram(payouts),
     }
+
+
+def analytical_ax(
+    age: int,
+    term: int,
+    interest_rate: float,
+) -> float:
+    """Ax — present value of a 1-unit death benefit. Same formula as the TS service."""
+    df = load_american_life_table()
+    df["male_death_probability"] = (
+        df["male_death_probability"].astype(str).str.strip().astype(float)
+    )
+    df["male_number_of_lives"] = (
+        df["male_number_of_lives"].astype(str).str.strip().astype(float)
+    )
+    df["age"] = df["age"].astype(str).str.strip().astype(int)
+    qx = dict(zip(df["age"], df["male_death_probability"]))
+    lx = dict(zip(df["age"], df["male_number_of_lives"]))
+
+    v = 1 / (1 + interest_rate)
+    l_base = lx[age]
+    ax = 0.0
+    for t in range(term):
+        t_p_x = lx[age + t] / l_base
+        ax += v ** (t + 1) * t_p_x * qx[age + t]
+    return ax
 
 
 def _build_histogram(payouts: np.ndarray, bins: int = 20) -> list[dict]:
